@@ -1,0 +1,34 @@
+{
+  "name": "Backbone.EventStreams",
+  "version": "0.1.0",
+  "main": "dist/bacbone.eventstreams.js",
+  "description": "Backbone events as Bacon.js EventStreams",
+  "homepage": "https://github.com/pyykkis/Backbone.EventStreams",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pyykkis/Backbone.EventStreams.git"
+  },
+  "keywords": [
+    "frp",
+    "functional reactive programming",
+    "backbone",
+    "bacon.js"
+  ],
+  "author": "Jarno Keskikangas <jarno.keskikangas@leonidasoy.fi>",
+  "licenses": [
+    "MIT"
+  ],
+  "dependencies": {
+    "baconjs": "0.0.9",
+    "backbone": "~0.9.10"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.4.0",
+    "grunt": "~0.3.17",
+    "grunt-contrib-coffee": "~0.3.2",
+    "grunt-jasmine-task": "~0.2.3"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
+}
