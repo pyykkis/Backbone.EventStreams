@@ -1,4 +1,4 @@
 Backbone.EventStreams
 =====================
 
-FRP UIs with Bacon.js are tasty. I want my Backbone Models to act as EventStreams, too.
+Functional Reactive Programming with Bacon.js is tasty. I want my Backbone events as EventStreams, too.
