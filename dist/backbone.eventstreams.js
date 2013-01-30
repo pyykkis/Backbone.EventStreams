@@ -2,10 +2,13 @@
   var __slice = [].slice;
 
   Backbone.EventStream = {
-    asEventStream: function(eventName, eventTransformer) {
-      var eventTarget;
-      if (eventTransformer == null) {
-        eventTransformer = _.identity;
+    asEventStream: function() {
+      var args, eventName, eventTarget, eventTransformer, listener, _ref, _ref1;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      if (typeof args[0] === 'object') {
+        _ref = args.concat([_.identity]), listener = _ref[0], eventName = _ref[1], eventTransformer = _ref[2];
+      } else {
+        _ref1 = args.concat([_.identity]), eventName = _ref1[0], eventTransformer = _ref1[1];
       }
       eventTarget = this;
       return new Bacon.EventStream(function(sink) {
@@ -18,10 +21,17 @@
             return unbind();
           }
         };
-        unbind = function() {
-          return eventTarget.off(eventName, handler);
-        };
-        eventTarget.on(eventName, handler, this);
+        if (listener) {
+          unbind = function() {
+            return listener.stopListening(eventTarget, eventName, handler);
+          };
+          listener.listenTo(eventTarget, eventName, handler);
+        } else {
+          unbind = function() {
+            return eventTarget.off(eventName, handler);
+          };
+          eventTarget.on(eventName, handler, this);
+        }
         return unbind;
       });
     }

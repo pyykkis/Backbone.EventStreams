@@ -1,5 +1,9 @@
 Backbone.EventStream =
-  asEventStream: (eventName, eventTransformer = _.identity) ->
+  asEventStream: (args...) ->
+    if typeof args[0] == 'object'
+      [listener, eventName, eventTransformer] = args.concat [_.identity]
+    else
+      [eventName, eventTransformer] = args.concat [_.identity]
     eventTarget = this
     new Bacon.EventStream (sink) ->
       handler = (args...) ->
@@ -7,8 +11,12 @@ Backbone.EventStream =
         if reply == Bacon.noMore
           unbind()
 
-      unbind = -> eventTarget.off(eventName, handler)
-      eventTarget.on(eventName, handler, this)
+      if listener
+        unbind = -> listener.stopListening(eventTarget, eventName, handler)
+        listener.listenTo(eventTarget, eventName, handler)
+      else
+        unbind = -> eventTarget.off(eventName, handler)
+        eventTarget.on(eventName, handler, this)
       unbind
 
 _.extend Backbone,                      Backbone.EventStream
