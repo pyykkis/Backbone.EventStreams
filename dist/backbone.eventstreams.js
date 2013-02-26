@@ -62,4 +62,18 @@
 
   _.extend(Backbone.View.prototype, Backbone.EventStream);
 
+  Backbone.BaconProperty = {
+    toModel: function() {
+      var handler, model;
+      model = new Backbone.Model(this.take(1));
+      handler = function(value) {
+        return model.set(value);
+      };
+      this.onValue(handler);
+      return model;
+    }
+  };
+
+  _.extend(Bacon.Property.prototype, Backbone.BaconProperty);
+
 }).call(this);

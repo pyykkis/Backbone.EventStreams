@@ -29,3 +29,14 @@ _.extend Backbone.Collection.prototype, Backbone.EventStream
 _.extend Backbone.Router.prototype,     Backbone.EventStream
 _.extend Backbone.History.prototype,    Backbone.EventStream
 _.extend Backbone.View.prototype,       Backbone.EventStream
+
+Backbone.BaconProperty =
+  toModel: ->
+    model = new Backbone.Model(this.take(1))
+    handler = (value) ->
+      model.set value
+    this.onValue(handler)
+    model
+      
+
+_.extend Bacon.Property.prototype,      Backbone.BaconProperty
